@@ -3,7 +3,6 @@ package com.adrianavecchioli.findit;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,29 +19,25 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.adrianavecchioli.findit.adapter.ScrollAdapter;
 import com.adrianavecchioli.findit.db.SqlHelper;
 import com.adrianavecchioli.findit.domain.RememberItem;
-import com.adrianavecchioli.findit.service.LiveCardService;
 import com.adrianavecchioli.findit.util.RememberUtils;
 import com.google.android.glass.app.Card;
 import com.google.android.glass.app.Card.ImageLayout;
 import com.google.android.glass.widget.CardScrollView;
 
-public class Find extends Activity implements Callback {
+public class Find extends BaseActivity implements Callback {
 
 	private RememberItem itemSelected;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		RememberItem item = getIntent().getParcelableExtra(
-				LiveCardService.KEY_REMEMBER_ITEM);
 		String tag = null;
-		if (item == null) {
-			ArrayList<String> voiceResults = getIntent().getExtras()
-					.getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
-			if (voiceResults != null && !voiceResults.isEmpty()) {
-				tag = voiceResults.get(0);
-				item = SqlHelper.getInstance(this).findRememberItem(tag);
-			}
+		RememberItem item=null;
+		ArrayList<String> voiceResults = getIntent().getExtras()
+				.getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
+		if (voiceResults != null && !voiceResults.isEmpty()) {
+			tag = voiceResults.get(0);
+			item = SqlHelper.getInstance(this).findRememberItem(tag);
 		}
 		if (item != null) {
 			List<RememberItem> items = new ArrayList<RememberItem>();

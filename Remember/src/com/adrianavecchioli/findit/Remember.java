@@ -25,7 +25,7 @@ import com.google.android.glass.app.Card;
 import com.google.android.glass.app.Card.ImageLayout;
 import com.google.android.glass.media.CameraManager;
 
-public class Remember extends Activity implements Callback{
+public class Remember extends BaseActivity implements Callback{
 	
 	private static final int TAKE_PICTURE_REQUEST_CODE = 1;
 	private LocationServiceConnector locationServiceConnector=null;
@@ -42,7 +42,10 @@ public class Remember extends Activity implements Callback{
 		locationServiceConnector=new LocationServiceConnector();
 		locationServiceConnector.bind(this);
 	}
-	
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
@@ -146,9 +149,6 @@ public class Remember extends Activity implements Callback{
 	}
 	@Override
 	public boolean handleMessage(Message msg) {
-		if(msg!=null && msg.obj instanceof RememberItem){
-			RememberUtils.sendAddRememberItemBroadcast(this, (RememberItem)msg.obj);
-		}
 		finish();
 		return false;
 	}

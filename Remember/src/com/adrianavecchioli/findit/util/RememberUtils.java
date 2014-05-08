@@ -3,18 +3,20 @@ package com.adrianavecchioli.findit.util;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.adrianavecchioli.findit.AuthActivity;
 import com.adrianavecchioli.findit.domain.RememberItem;
-import com.adrianavecchioli.findit.receiver.AddBroadcastReceiver;
-import com.adrianavecchioli.findit.service.LiveCardService;
 
 public class RememberUtils {
 
@@ -83,22 +85,6 @@ public class RememberUtils {
 		options.inSampleSize=4;
 		return BitmapFactory.decodeFile(filePath, options);
 	}
-	public static void startLiveCardService(Context context,RememberItem item){
-		Intent service=new Intent(context,LiveCardService.class);
-		service.putExtra(LiveCardService.KEY_REMEMBER_ITEM, item);
-		context.startService(service);
-	}
-	
-	public static void stopLiveCardService(Context context){
-		Intent service=new Intent(context,LiveCardService.class);
-		context.stopService(service);
-	}
-	
-	public static void sendAddRememberItemBroadcast(Context context,RememberItem item){
-		Intent brodacastIntent=new Intent(AddBroadcastReceiver.ACTION);
-		brodacastIntent.putExtra(LiveCardService.KEY_REMEMBER_ITEM, item);
-		context.startService(brodacastIntent);
-	}
 	public static void launchGoogleMap(Context context,RememberItem item) {
 		Location location = item.getLocation();
 		Intent intent = RememberUtils.getGeoIntentFromLocation(location);
@@ -114,5 +100,23 @@ public class RememberUtils {
 
 		// Pick an account from the list of returned accounts.
 	}
+	
+	public static boolean isAuthentificated(Context context){
+		SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+		return !mPrefs.getString(PreferenceConstants.REFRESH_TOKEN, "").isEmpty();
+		
+	}
+	
+	public static void startAuthentificationProcess(Activity activity,int requestCode){
+		Intent authSetupIntent  = new Intent(activity, AuthActivity.class);
+		activity.startActivityForResult(authSetupIntent, requestCode);
+		
+	}
+	
+	
+	
+	
+	
+	
 
 }

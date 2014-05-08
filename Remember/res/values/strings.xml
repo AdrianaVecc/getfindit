@@ -46,5 +46,6 @@
     <string name="menu_delete">Delete</string>
     <string name="menu_stop">Stop</string>
     <string name="object_delete">Deleted</string>
+    <string name="signin_message">Lol sign in</string>
 
 </resources>

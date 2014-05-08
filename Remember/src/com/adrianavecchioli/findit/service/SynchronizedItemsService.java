@@ -3,12 +3,12 @@ package com.adrianavecchioli.findit.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.adrianavecchioli.findit.db.SqlHelper;
-import com.adrianavecchioli.findit.domain.RememberItem;
-
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+
+import com.adrianavecchioli.findit.db.SqlHelper;
+import com.adrianavecchioli.findit.domain.RememberItem;
 
 public class SynchronizedItemsService extends Service {
 

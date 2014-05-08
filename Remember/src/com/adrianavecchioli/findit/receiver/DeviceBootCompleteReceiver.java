@@ -1,12 +1,12 @@
 package com.adrianavecchioli.findit.receiver;
 
-import com.adrianavecchioli.findit.db.SqlHelper;
-import com.adrianavecchioli.findit.domain.RememberItem;
-import com.adrianavecchioli.findit.util.RememberUtils;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import com.adrianavecchioli.findit.db.SqlHelper;
+import com.adrianavecchioli.findit.domain.RememberItem;
+import com.adrianavecchioli.findit.util.RememberUtils;
 
 
 

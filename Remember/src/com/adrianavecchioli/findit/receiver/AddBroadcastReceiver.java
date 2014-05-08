@@ -1,12 +1,12 @@
 package com.adrianavecchioli.findit.receiver;
 
-import com.adrianavecchioli.findit.domain.RememberItem;
-import com.adrianavecchioli.findit.service.LiveCardService;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+
+import com.adrianavecchioli.findit.domain.RememberItem;
+import com.adrianavecchioli.findit.service.LiveCardService;
 
 
 

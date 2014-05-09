@@ -19,6 +19,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.adrianavecchioli.findit.adapter.ScrollAdapter;
 import com.adrianavecchioli.findit.db.SqlHelper;
 import com.adrianavecchioli.findit.domain.RememberItem;
+import com.adrianavecchioli.findit.request.GetRememberItemTask;
 import com.adrianavecchioli.findit.util.RememberUtils;
 import com.google.android.glass.app.Card;
 import com.google.android.glass.app.Card.ImageLayout;
@@ -53,6 +54,7 @@ public class Find extends BaseActivity implements Callback {
 				displayFailureView();
 			}
 		}
+		new GetRememberItemTask(this).execute("");
 	}
 	private void displayFailureView() {
 		Card fail = new Card(this);

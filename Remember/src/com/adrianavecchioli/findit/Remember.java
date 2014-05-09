@@ -3,7 +3,6 @@ package com.adrianavecchioli.findit;
 import java.io.File;
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.location.Location;

@@ -9,9 +9,15 @@ import android.os.IBinder;
 
 import com.adrianavecchioli.findit.db.SqlHelper;
 import com.adrianavecchioli.findit.domain.RememberItem;
+import com.adrianavecchioli.findit.request.DeleteRememberItemTask;
+import com.adrianavecchioli.findit.request.UploadRememberItemTask;
 
 public class SynchronizedItemsService extends Service {
 
+	
+	public static final String UPLOAD_URL = "url";
+	public static final String TOKEN = "token";
+	
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
@@ -38,10 +44,10 @@ public class SynchronizedItemsService extends Service {
 	}
 
 	private void uploadOnServer(RememberItem item) {
-		
+		new UploadRememberItemTask(item, this).execute("");
 	}
 
 	private void deleteOnServer(String idDeleted) {
-		
+		new DeleteRememberItemTask(this, idDeleted);
 	}
 }

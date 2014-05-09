@@ -17,6 +17,7 @@ import android.util.Log;
 
 import com.adrianavecchioli.findit.AuthActivity;
 import com.adrianavecchioli.findit.domain.RememberItem;
+import com.adrianavecchioli.findit.service.SynchronizedItemsService;
 
 public class RememberUtils {
 
@@ -111,6 +112,11 @@ public class RememberUtils {
 		Intent authSetupIntent  = new Intent(activity, AuthActivity.class);
 		activity.startActivityForResult(authSetupIntent, requestCode);
 		
+	}
+
+	public static void startSynchronization(Context context) {
+		Intent synchronization  = new Intent(context, SynchronizedItemsService.class);
+		context.startService(synchronization);
 	}
 	
 	

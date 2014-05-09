@@ -9,4 +9,9 @@ public class UploadFormatBuilder {
 		
 		return null;
 	}
+
+	public static char[] buildITemToJSON(RememberItem item) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

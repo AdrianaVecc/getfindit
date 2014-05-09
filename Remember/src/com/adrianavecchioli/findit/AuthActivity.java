@@ -34,7 +34,6 @@ public class AuthActivity extends Activity {
 	private int mState = STATE_START;
 
 	private String mDeviceCode;
-
 	private Context mContext;
 
 	private TextView mCardTitle;
@@ -73,12 +72,8 @@ public class AuthActivity extends Activity {
 
 			switch (mState) {
 			case STATE_START:
-				// Get the device code
-
 				displayLoading();
 				playClickSound();
-
-				// Start the authentication process
 				GetDeviceCodeTask task = new GetDeviceCodeTask();
 
 				task.setListener(new OnGetDeviceCodeListener() {

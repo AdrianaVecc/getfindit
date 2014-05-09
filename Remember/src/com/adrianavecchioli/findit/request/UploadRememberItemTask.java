@@ -5,6 +5,7 @@ import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.security.GeneralSecurityException;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -34,16 +35,12 @@ public class UploadRememberItemTask extends
 	@Override
 	protected Integer doInBackground(String... params) {
 		try{
-			uploadItem(rememberItem);
+			UploadFormatBuilder.upload(context, this.rememberItem);
 		}catch(Exception exception){
 			return FAILURE;
 		}
 		return SUCCESS;
 	}
-
-
-
-
 
 	@Override
 	protected void onPostExecute(Integer result) {
@@ -51,26 +48,6 @@ public class UploadRememberItemTask extends
 		if(result!=null && result==SUCCESS){
 			SqlHelper.getInstance(context).saveUploaded(rememberItem.getId());
 		}
-	}
-	private void uploadItem(RememberItem item) throws MalformedURLException,
-			IOException, ProtocolException {
-		URL urlObject = new URL(SynchronizedItemsService.UPLOAD_URL);
-		HttpsURLConnection con = (HttpsURLConnection) urlObject
-				.openConnection();
-		con.setRequestMethod("PUT");
-		con.setRequestProperty("Authorization", "Bearer "
-				+ SynchronizedItemsService.TOKEN);
-		con.setRequestProperty("Content-Type", "application/json");
-
-		con.setDoOutput(true);
-
-		con.connect();
-
-		OutputStreamWriter output = new OutputStreamWriter(
-				con.getOutputStream());
-		output.write(UploadFormatBuilder.buildITemToJSON(item));
-		output.flush();
-		output.close();
 	}
 
 }

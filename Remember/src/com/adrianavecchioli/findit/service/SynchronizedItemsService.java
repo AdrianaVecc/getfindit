@@ -11,12 +11,13 @@ import com.adrianavecchioli.findit.db.SqlHelper;
 import com.adrianavecchioli.findit.domain.RememberItem;
 import com.adrianavecchioli.findit.request.DeleteRememberItemTask;
 import com.adrianavecchioli.findit.request.UploadRememberItemTask;
+import com.adrianavecchioli.findit.util.RememberUtils;
 
 public class SynchronizedItemsService extends Service {
 
 	
 	public static final String UPLOAD_URL = "url";
-	public static final String TOKEN = "token";
+	public static  String TOKEN = "token";
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -25,7 +26,7 @@ public class SynchronizedItemsService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-	
+		TOKEN=RememberUtils.getToken(this);
 		List<String> serverItemIds=new ArrayList<String>();
 		List<RememberItem> items=SqlHelper.getInstance(this).findAllRememberItem();
 		for(RememberItem item:items){
@@ -48,6 +49,6 @@ public class SynchronizedItemsService extends Service {
 	}
 
 	private void deleteOnServer(String idDeleted) {
-		new DeleteRememberItemTask(this, idDeleted);
+		//new DeleteRememberItemTask(this, idDeleted);
 	}
 }

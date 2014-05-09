@@ -1,6 +1,9 @@
 package com.adrianavecchioli.findit.util;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -14,8 +17,10 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.adrianavecchioli.findit.AuthActivity;
+import com.adrianavecchioli.findit.R;
 import com.adrianavecchioli.findit.domain.RememberItem;
 import com.adrianavecchioli.findit.service.SynchronizedItemsService;
 
@@ -70,12 +75,18 @@ public class RememberUtils {
 
 	public static Location getDefaultLocation(){
 		Location location=new Location("Remember");
-		location.setLatitude(48.860611);
-		location.setLongitude(2.337644);
+		location.setLatitude(-1);
+		location.setLongitude(-1);
 		return location;
 		
 	}
 	public static Intent getGeoIntentFromLocation(Location location){
+		if(location==null ){
+			return null;
+		}
+		if(location.getLatitude()==-1 && location.getLongitude()==-1){
+			return null;
+		}
 		Intent dir = new Intent(Intent.ACTION_VIEW);
     	dir.setData(Uri.parse("google.navigation:q=" + location.getLatitude() + ", " + location.getLongitude()));
 		return dir;
@@ -89,7 +100,12 @@ public class RememberUtils {
 	public static void launchGoogleMap(Context context,RememberItem item) {
 		Location location = item.getLocation();
 		Intent intent = RememberUtils.getGeoIntentFromLocation(location);
-		context.startActivity(intent);
+		if(intent==null){
+			Toast.makeText(context,R.string.no_location_associtae, Toast.LENGTH_SHORT).show();
+		}
+		else{
+			context.startActivity(intent);	
+		}
 	}
 	
 	public static void logUserEmail(Context context){
@@ -108,6 +124,13 @@ public class RememberUtils {
 		
 	}
 	
+	public static String getToken(Context context){
+		SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+		return mPrefs.getString(PreferenceConstants.REFRESH_TOKEN,null);
+		
+	}
+	
+	
 	public static void startAuthentificationProcess(Activity activity,int requestCode){
 		Intent authSetupIntent  = new Intent(activity, AuthActivity.class);
 		activity.startActivityForResult(authSetupIntent, requestCode);
@@ -117,6 +140,14 @@ public class RememberUtils {
 	public static void startSynchronization(Context context) {
 		Intent synchronization  = new Intent(context, SynchronizedItemsService.class);
 		context.startService(synchronization);
+	}
+
+	public static Map<String, String> convertToMaps(RememberItem item) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put("tag", item.getTag());
+		map.put("location",RememberUtils.getLocationAsString(item.getLocation()));
+		map.put("date", String.valueOf(item.getAddedDate()));
+		return map;
 	}
 	
 	

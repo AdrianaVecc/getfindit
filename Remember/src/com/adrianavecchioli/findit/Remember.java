@@ -19,7 +19,6 @@ import android.view.View;
 import com.adrianavecchioli.findit.db.SqlHelper;
 import com.adrianavecchioli.findit.domain.RememberItem;
 import com.adrianavecchioli.findit.service.LocationServiceConnector;
-import com.adrianavecchioli.findit.util.RememberUtils;
 import com.google.android.glass.app.Card;
 import com.google.android.glass.app.Card.ImageLayout;
 import com.google.android.glass.media.CameraManager;

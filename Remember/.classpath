@@ -4,14 +4,15 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/home/lamine/dev/sdk/androidsdk/platforms/android-19/android.jar" sourcepath="/home/lamine/dev/sdk/androidsdk/sources/android-19">
-		<attributes>
-			<attribute name="javadoc_location" value="http://developer.android.com/reference/"/>
-		</attributes>
-		<accessrules>
-			<accessrule kind="nonaccessible" pattern="com/android/internal/**"/>
-		</accessrules>
-	</classpathentry>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="lib" path="/Users/adriana_10_09/Downloads/storage 3/libs/google-api-client-appengine-1.18.0-rc.jar"/>
+	<classpathentry kind="lib" path="/Users/adriana_10_09/Downloads/storage 3/libs/google-api-client-1.18.0-rc.jar"/>
+	<classpathentry kind="lib" path="/Users/adriana_10_09/Downloads/storage 3/libs/google-api-client-android-1.18.0-rc.jar"/>
+	<classpathentry kind="lib" path="/Users/adriana_10_09/Downloads/storage 3/libs/google-api-client-java6-1.18.0-rc.jar"/>
+	<classpathentry kind="lib" path="/Users/adriana_10_09/Downloads/storage 3/libs/google-http-client-1.18.0-rc.jar"/>
+	<classpathentry kind="lib" path="/Users/adriana_10_09/Downloads/storage 3/libs/google-http-client-android-1.18.0-rc.jar"/>
+	<classpathentry kind="lib" path="/Users/adriana_10_09/Downloads/storage 3/libs/google-http-client-appengine-1.18.0-rc.jar"/>
+	<classpathentry kind="lib" path="/Users/adriana_10_09/Downloads/storage 3/libs/google-oauth-client-appengine-1.18.0-rc.jar"/>
+	<classpathentry kind="lib" path="/Users/adriana_10_09/Downloads/storage 3/libs/transaction-api-1.1.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

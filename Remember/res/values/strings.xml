@@ -18,7 +18,7 @@
 <resources>
 
     <!-- Launch-related strings. -->
-    <string name="app_name">Find It</string>
+    <string name="app_name">find it</string>
     <string name="rememberTrig">remember this</string>
     <string name="findTrig">find something</string>
     <string name="rememberPrompt">Enter a tag to remember this by...</string>
@@ -45,7 +45,7 @@
     <string name="menu_get_directions">Get directions</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_stop">Stop</string>
-    <string name="object_delete">Deleted</string>
+    <string name="object_delete">Deleted!</string>
     <string name="signin_message">Lol sign in</string>
     <string name="no_location_associtae">no_location_associtae</string>
 

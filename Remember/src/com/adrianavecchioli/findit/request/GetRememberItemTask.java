@@ -1,9 +1,5 @@
 package com.adrianavecchioli.findit.request;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +34,7 @@ public class GetRememberItemTask extends
 			SqlHelper.getInstance(context).saveUploaded(result);
 		}
 	}
-	private List<String> getItemIDonServer() throws MalformedURLException,
-			IOException, ProtocolException, GeneralSecurityException {
+	private List<String> getItemIDonServer() throws Exception {
 		return  new ArrayList<String>(UploadFormatBuilder.list(context).keySet());
 
 	}

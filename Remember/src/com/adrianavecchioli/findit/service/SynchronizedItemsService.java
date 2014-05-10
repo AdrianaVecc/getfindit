@@ -6,12 +6,14 @@ import java.util.List;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.adrianavecchioli.findit.db.SqlHelper;
 import com.adrianavecchioli.findit.domain.RememberItem;
 import com.adrianavecchioli.findit.request.DeleteRememberItemTask;
 import com.adrianavecchioli.findit.request.UploadRememberItemTask;
 import com.adrianavecchioli.findit.util.RememberUtils;
+import com.google.android.gms.internal.dd;
 
 public class SynchronizedItemsService extends Service {
 
@@ -29,16 +31,14 @@ public class SynchronizedItemsService extends Service {
 		TOKEN=RememberUtils.getToken(this);
 		List<String> serverItemIds=new ArrayList<String>();
 		List<RememberItem> items=SqlHelper.getInstance(this).findAllRememberItem();
+		Log.i("REMEMBER", "TO BE UPLOADED "+items.size() );
 		for(RememberItem item:items){
-			if(!serverItemIds.contains(item)){
 				uploadOnServer(item);
-			}
 		}
 		List<String>deletedIds=SqlHelper.getInstance(this).findDeletedRememberItemId();
+		Log.i("REMEMBER", "TO BE DELETED "+deletedIds.size() );
 		for(String idDeleted:deletedIds){
-			if(serverItemIds.contains(idDeleted)){
-				deleteOnServer(idDeleted);
-			}
+			deleteOnServer(idDeleted);
 		}
 		
 		return super.onStartCommand(intent, flags, startId);
@@ -49,6 +49,6 @@ public class SynchronizedItemsService extends Service {
 	}
 
 	private void deleteOnServer(String idDeleted) {
-		//new DeleteRememberItemTask(this, idDeleted);
+		new DeleteRememberItemTask(this, idDeleted);
 	}
 }

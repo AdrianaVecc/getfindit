@@ -1,20 +1,11 @@
 package com.adrianavecchioli.findit.request;
 
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.security.GeneralSecurityException;
-
-import javax.net.ssl.HttpsURLConnection;
-
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.adrianavecchioli.findit.db.SqlHelper;
 import com.adrianavecchioli.findit.domain.RememberItem;
-import com.adrianavecchioli.findit.service.SynchronizedItemsService;
 import com.adrianavecchioli.findit.util.UploadFormatBuilder;
 
 public class UploadRememberItemTask extends
@@ -35,8 +26,12 @@ public class UploadRememberItemTask extends
 	@Override
 	protected Integer doInBackground(String... params) {
 		try{
+			Log.i("REMEMBER", "UPLOADING ");
 			UploadFormatBuilder.upload(context, this.rememberItem);
+			Log.i("REMEMBER", "UPLOADING OK ");
 		}catch(Exception exception){
+			Log.i("REMEMBER", "UPLOADING FAIL "+exception.toString());
+			exception.printStackTrace();
 			return FAILURE;
 		}
 		return SUCCESS;

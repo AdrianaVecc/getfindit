@@ -3,17 +3,24 @@ package com.adrianavecchioli.findit.util;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.Map;
 
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
+import android.util.Log;
 
 import com.adrianavecchioli.findit.domain.RememberItem;
 import com.adrianavecchioli.findit.request.UploadConst;
 import com.adrianavecchioli.findit.service.SynchronizedItemsService;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.http.HttpHeaders;
+import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.InputStreamContent;
@@ -23,6 +30,7 @@ import com.google.api.services.storage.Storage;
 import com.google.api.services.storage.Storage.Objects.Delete;
 import com.google.api.services.storage.Storage.Objects.Insert;
 import com.google.api.services.storage.Storage.Objects.List;
+import com.google.api.services.storage.StorageScopes;
 import com.google.api.services.storage.model.Objects;
 import com.google.api.services.storage.model.StorageObject;
 
@@ -31,10 +39,21 @@ import com.google.api.services.storage.model.StorageObject;
 public class UploadFormatBuilder {
 
 
+	private static final String APPLICATION_NAME_PROPERTY = "findit";
+	private static final String ACCOUNT_ID_PROPERTY = "175257221130@developer.gserviceaccount.com";
+	private static final String PRIVATE_KEY_PATH_PROPERTY = "client_secret_175257221130.apps.googleusercontent.com.json";
+	
+	
+	
+
+
+			
+
 	public static void upload(Context context, RememberItem item)
-			throws IOException, GeneralSecurityException {
+			throws Exception {
 		InputStream inputStream = new BufferedInputStream(new FileInputStream(
 				new File(item.getImagePath())));
+		
 		InputStreamContent mediaContent = new InputStreamContent(
 				"application/octet-stream", inputStream);
 		StorageObject objectMetadata = new StorageObject();
@@ -50,41 +69,48 @@ public class UploadFormatBuilder {
 		}
 		insertObject.setOauthToken(SynchronizedItemsService.TOKEN);
 		insertObject.execute();
+		Log.i("REMEMBER", "UPLOADED"+item.getTag());
 	}
 
-	public static Objects list(Context context) throws IOException,
-			GeneralSecurityException {
+	public static Objects list(Context context) throws Exception {
 		Storage storage = getStorage(context);
 		List list = storage.objects().list(UploadConst.BUCKET_NAME);
 		list.setOauthToken(SynchronizedItemsService.TOKEN);
+		Log.i("REMEMBER", "GETLIT");
 		return list.execute();
+		
 
 	}
 
-	public static void delete(Context context, RememberItem item)
-			throws IOException, GeneralSecurityException {
+	public static void delete(Context context, String item)
+			throws Exception {
 		Storage storage = getStorage(context);
-		Delete delete = storage.objects().delete(UploadConst.BUCKET_NAME, item.getId());
+		Delete delete = storage.objects().delete(UploadConst.BUCKET_NAME, item);
 		delete.setOauthToken(SynchronizedItemsService.TOKEN);
 		delete.execute();
-	}
-
-	private static class StorageRequestInitializer implements
-			HttpRequestInitializer {
-		@Override
-		public void initialize(com.google.api.client.http.HttpRequest arg0)
-				throws IOException {
-		}
+		
+		Log.i("REMEMBER", "DELETED"+item);
 	}
 
 
-	private static Storage getStorage(Context context)
-			throws GeneralSecurityException, IOException {
-		HttpTransport httpTransport = GoogleNetHttpTransport
-				.newTrustedTransport();
-		return new Storage.Builder(httpTransport, null,
-				new StorageRequestInitializer()).setApplicationName("findit")
-				.build();
+
+
+
+	private static Storage getStorage(Context context) throws Exception {
+		HttpTransport httpTransport =AndroidHttp.newCompatibleTransport();
+		JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+		Storage	storage = new Storage.Builder(httpTransport, JSON_FACTORY,
+					new HttpRequestInitializer() {
+						
+						@Override
+						public void initialize(HttpRequest arg0) throws IOException {
+							HttpHeaders headers=new HttpHeaders();
+							
+						}
+					}).setApplicationName(APPLICATION_NAME_PROPERTY)
+					.build();
+		return storage;
 	}
+
 
 }
